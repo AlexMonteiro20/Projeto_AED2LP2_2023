@@ -27,6 +27,7 @@ public class Viagem {
     this.rotas = rotas;
   }
 
+
   //GETS E SETS VIAGEM
   public Local getLocal_partida() {
     return Local_partida;

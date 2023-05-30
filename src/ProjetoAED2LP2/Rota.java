@@ -22,6 +22,14 @@ public class Rota {
     this.ligacoes = ligacoes;
   }
 
+  public Rota(int id_rota, float preco, Horario tempo, int paragens, Viagem viagem) {
+    this.id_rota = id_rota;
+    this.preco = preco;
+    this.tempo = tempo;
+    this.paragens = paragens;
+    this.viagem = viagem;
+  }
+
   //GETS E SETS ROTA
   public int getId_rota() {
     return id_rota;

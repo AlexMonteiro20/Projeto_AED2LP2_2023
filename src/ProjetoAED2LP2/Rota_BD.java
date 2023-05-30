@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
-public class Rota_BD implements Rota_I{
+ public class Rota_BD implements Rota_I{
     private BST_AED2<Integer, Rota> bst_rotas = new BST_AED2<>();
     private int num_rotas;
     private final Date data = new Date();
@@ -92,7 +92,7 @@ public class Rota_BD implements Rota_I{
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("Data/Rotas.txt"))) {
             Collection<Rota> rotas  = bst_rotas.values();
             for (Rota rota : rotas) {
-                String linha = "ID_ROTA: " + rota.getId_rota() ;
+                String linha = "ID_ROTA: " + rota.getId_rota() + ", PRECO_ROTA: " + rota.getPreco() + ", TEMPO_ROTA_HORA: " + rota.getTempo().getHora() + ", TEMPO_ROTA_MINUTOS: " + rota.getTempo().getMinutos() + ", NUM_PARAGENS: " + rota.getParagens() + ", ID_VIAGEM_ASSOCIADA:  " + rota.getViagem().getId_Viagem();
                 writer.write(linha);
                 writer.newLine();
             }
@@ -104,23 +104,23 @@ public class Rota_BD implements Rota_I{
 
     //Método para listar todos os users do ficheiro
     @Override
-    public void listar_ligacoes() {
+    public void listar_rotas() {
         try (BufferedReader reader = new BufferedReader(new FileReader("Data/Rotas.txt"))) {
             String linha;
             while ((linha = reader.readLine()) != null) {
                 String[] campos = linha.split(", ");
-                if (campos.length == 8) {
+                if (campos.length == 12) {
                     int idRota = Integer.parseInt(campos[0].substring(4));
-                    //int id_estacao_a = Integer.parseInt(campos[2].substring(6));
-                    //int id_estacao_b = Integer.parseInt(campos[4].substring(13));
-                    //int id_transporte = Integer.parseInt(campos[6].substring(13));
-                    //Estacao_BD estacao_bd = new Estacao_BD();
-                    //Transporte_BD transporte_bd = new Transporte_BD();
-                    //Estacao estacao_a = estacao_bd.encontrarEstacaoPorId(id_estacao_a);
-                    //Estacao estacao_b = estacao_bd.encontrarEstacaoPorId(id_estacao_b);
-                    //Transporte transporte_utilizado = transporte_bd.encontrarTransportePorId(id_transporte);
-                    //Ligacao ligacao = new Ligacao(idLigacao,estacao_a,estacao_b,transporte_utilizado);
-                    //bst_ligacoes.put(idLigacao, ligacao);
+                    float preco_rota = Integer.parseInt(campos[2].substring(6));
+                    int rota_horas = Integer.parseInt(campos[4].substring(13));
+                    int rota_minutos = Integer.parseInt(campos[6].substring(13));
+                    int num_paragens = Integer.parseInt(campos[8].substring(13));
+                    int id_viagem = Integer.parseInt(campos[10].substring(13));
+                    Horario horario_rota = new Horario(rota_horas,rota_minutos);
+                    Viagem_BD viagemBd = new Viagem_BD();
+                    Viagem viagem =  viagemBd.encontrarViagemPorId(id_viagem);
+                    Rota rota = new Rota(idRota,preco_rota,horario_rota,num_paragens,viagem);
+                    bst_rotas.put(idRota, rota);
                 }
             }
             System.out.println("Rotas carregadas do arquivo com sucesso.");

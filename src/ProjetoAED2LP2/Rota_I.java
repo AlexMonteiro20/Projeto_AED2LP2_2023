@@ -8,5 +8,5 @@ public interface Rota_I {
     boolean verificar_rota(Integer idRota);
     boolean editar_rota(int id_rota, ArrayList<Ligacao> ligacaos);
     void guardar_rota();
-    void listar_ligacoes();
+    void listar_rotas();
 }
