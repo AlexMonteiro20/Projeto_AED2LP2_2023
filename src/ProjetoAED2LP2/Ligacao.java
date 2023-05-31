@@ -12,18 +12,16 @@ public class Ligacao {
   public Horario tempo_ligacao;
   public float custo_ligacao;
   public Transporte transporte_utilizado;
-  public ArrayList<Estacao> estacao;
 
 
   //CONSTRUTOR TRANSPORTE
-  public Ligacao(int id_ligacao, Estacao estacao_a, Estacao estacao_b, Horario tempo_ligacao, float custo_ligacao, Transporte transporte_utilizado, ArrayList<Estacao> estacao) {
+  public Ligacao(int id_ligacao, Estacao estacao_a, Estacao estacao_b, Horario tempo_ligacao, float custo_ligacao, Transporte transporte_utilizado) {
     this.id_ligacao = id_ligacao;
     this.estacao_a = estacao_a;
     this.estacao_b = estacao_b;
     this.tempo_ligacao = tempo_ligacao;
     this.custo_ligacao = custo_ligacao;
     this.transporte_utilizado = transporte_utilizado;
-    this.estacao = estacao;
   }
 
   public Ligacao(int id_ligacao, Estacao estacao_a, Estacao estacao_b, Transporte transporte_utilizado) {
@@ -71,24 +69,39 @@ public class Ligacao {
   public void setTransporte_utilizado(Transporte transporte_utilizado) {
     this.transporte_utilizado = transporte_utilizado;
   }
-  public ArrayList<Estacao> getEstacao() {
-    return estacao;
-  }
-  public void setEstacao(ArrayList<Estacao> estacao) {
-    this.estacao = estacao;
+
+  //FUNCOES LIGACOES
+  public float getCustoLigacao(){
+    float custoLigacao = distanciaEntreEstacoes_Ligacao(estacao_a,estacao_b) * transporte_utilizado.getCusto_transporte();
+    return custoLigacao;
   }
 
-//FUNCOES A IMPLEMENTAR//
+  public Horario getTempoLigacao(){
+    Horario tempoLigacao = new Horario(0,0);
+    float value = distanciaEntreEstacoes_Ligacao(estacao_a,estacao_b) * transporte_utilizado.getTempo_transporte();
+    if(value > 60){
+      int horas = (int) value/60;
+      int minutos =(int) value - horas * 60;
+      tempoLigacao = new Horario(horas,minutos);
+    }
+    if(value < 60){
+      int horas = 0;
+      int minutos = (int)value;
+      tempoLigacao = new Horario(horas,minutos);
+    }
+    return tempoLigacao;
+  }
 
-  /*
-  public void addTransporte(Transporte t) {
+  public float distanciaEntreEstacoes_Ligacao(Estacao a, Estacao b){
+    double distancia = Math.sqrt(Math.pow(b.getLocal_x() - a.getLocal_x(), 2) + Math.pow(b.getLocal_y() - a.getLocal_y(), 2));
+    return (float)distancia;
   }
-  public Transporte deleteTransporte(int t) {
-  return null;
+
+  public ArrayList<Estacao> getEstacoesLigacao(){
+    ArrayList<Estacao> estacoesLigacao = new ArrayList<>();
+    estacoesLigacao.add(estacao_a);
+    estacoesLigacao.add(estacao_b);
+    return estacoesLigacao;
   }
-  public ArrayList<Transporte> listaTransportes() {
-  return null;
-  }
-   */
 
 }

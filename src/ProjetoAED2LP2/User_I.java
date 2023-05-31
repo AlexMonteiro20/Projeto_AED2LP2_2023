@@ -5,7 +5,7 @@ import java.util.Date;
 
 public interface User_I {
     void inserir_user(User user);
-    void remove_user(Integer idUser) throws User_Exception;
+    void remove_user(Integer idUser); //throws User_Exception;
     boolean verificar_user(Integer idUser);
     boolean editar_user(Integer idUser, String nome);
     void guardar_user();

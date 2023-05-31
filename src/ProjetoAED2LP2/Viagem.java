@@ -10,22 +10,20 @@ public class Viagem {
   public Date data_viagem;
   public Horario Hora_inicio;
   public Horario Hora_fim;
-  public ArrayList<User> users;
   public ArrayList<Rota> rotas;
   public Rota rota_user;
 
 
 //CONSTRUTOR VIAGEM
-  public Viagem(int id_Viagem, Local local_partida, Local local_destino, Date data_viagem, Horario hora_inicio, Horario hora_fim, ArrayList<User> users, ArrayList<Rota> rotas) {
-    this.id_Viagem = id_Viagem;
-    Local_partida = local_partida;
-    Local_destino = local_destino;
-    this.data_viagem = data_viagem;
-    Hora_inicio = hora_inicio;
-    Hora_fim = hora_fim;
-    this.users = users;
-    this.rotas = rotas;
-  }
+public Viagem(int id_Viagem, Local local_partida, Local local_destino, Date data_viagem, Horario hora_inicio, Horario hora_fim, ArrayList<Rota> rotas) {
+  this.id_Viagem = id_Viagem;
+  Local_partida = local_partida;
+  Local_destino = local_destino;
+  this.data_viagem = data_viagem;
+  Hora_inicio = hora_inicio;
+  Hora_fim = hora_fim;
+  this.rotas = rotas;
+}
 
 
   //GETS E SETS VIAGEM
@@ -54,6 +52,9 @@ public class Viagem {
     Hora_inicio = hora_inicio;
   }
   public Horario getHora_fim() {
+    Horario tempo = new Horario(0,0);
+    tempo = rota_user.getTempo();
+    Hora_fim = tempo.somarHorarios(tempo,Hora_inicio);
     return Hora_fim;
   }
   public void setHora_fim(Horario hora_fim) {
@@ -64,12 +65,6 @@ public class Viagem {
   }
   public void setId_Viagem(int id_Viagem) {
     this.id_Viagem = id_Viagem;
-  }
-  public ArrayList<User> getUser() {
-    return users;
-  }
-  public void setUser(ArrayList<User> users) {
-    this.users = users;
   }
   public ArrayList<Rota> getRota() {
     return rotas;

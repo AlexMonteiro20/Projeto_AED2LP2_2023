@@ -68,17 +68,31 @@ public class Rota {
     this.ligacoes = ligacoes;
   }
 
-  //FUNCOES A IMPLEMENTAR
-  /*
-  public ArrayList<Ligacao> listaLigacoes() {
-    return null;
+
+  //FUNCOES ROTA
+  public float getPrecoRota(){
+    float preco_rota = 0.0f;
+    for(Ligacao ligacao : ligacoes){
+     preco_rota += ligacao.getCusto_ligacao();
+    }
+    return preco_rota;
   }
 
-  public void addLigacao(Ligacao l) {
+  public Horario getTempoRota(){
+    Horario tempoRota = new Horario(0,0);
+    for(Ligacao ligacao : ligacoes){
+      Horario tempoLigacao = ligacao.getTempo_ligacao();
+      tempoRota = tempoRota.somarHorarios(tempoRota,tempoLigacao);
+    }
+    return tempoRota;
   }
 
-  public Ligacao deleteLigacao(int l) {
-  return null;
+  public int getParagensRota(){
+    int paragensRota = 1;
+    for(Ligacao ligacao : ligacoes){
+      paragensRota +=1;
+    }
+    return paragensRota;
   }
-   */
+
 }

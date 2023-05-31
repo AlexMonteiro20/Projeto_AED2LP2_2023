@@ -12,7 +12,24 @@ import java.util.HashMap;
 import java.util.Date;
 
 public class Local_BD implements Local_I {
-    public void addText(String mensagem, Date data, String file){
+    private HashMap<Integer, Local> map_local = new HashMap<>();
+    private int ref_local  = 1;
+    private final Date data = new Date();
+
+    //GETS E SETS LOCAL_BD
+    public HashMap<Integer, Local> getMap_local() {
+        return map_local;
+    }
+    public void setMap_local(HashMap<Integer, Local> map_local){this.map_local = map_local;}
+    public int getRef_local() {
+        return ref_local;
+    }
+    public void setRef_local(int ref_local) {
+        this.ref_local = ref_local;
+    }
+
+    //METODO PARA ADICIONAR TEXTO RELATIVO AOS LOCAIS AO FICHEIRO
+    public void addText_local(String mensagem, Date data, String file){
 
         int k=0;
         In Infile = new In(file);
@@ -27,57 +44,55 @@ public class Local_BD implements Local_I {
         Outfile.println(mensagem + ", na data de: " + data);
     }
 
-    private HashMap<Integer, Local> map_local = new HashMap<>();
-    private int ref_local  = 1;
-    private final Local_BD locais = new Local_BD();
-    private final Date data = new Date();
-
-    //Gets & Sets
-    public HashMap<Integer, Local> getMap_local() {
-        return map_local;
-    }
-    public void setMap_local(HashMap<Integer, Local> map_local){this.map_local = map_local;}
-    public int getRef_local() {
-        return ref_local;
-    }
-    public void setRef_local(int ref_local) {
-        this.ref_local = ref_local;
-    }
-
-    //Método para inserir um novo local
+    //METODO PARA INSERIR UM LOCAL
     @Override
     public boolean inserir_local(Local local) {
         local.setId_local(ref_local);
         map_local.put(ref_local,local);
         ref_local++;
         String toLocal = "Foi adicionado um novo Local: " + local.getId_local();
-        locais.addText(toLocal, data, "Data/Info");
+        addText_local(toLocal, data, "C:\\Users\\Alex\\Documents\\JavaProjects\\Projeto_AED2LP2\\src\\Data\\Info");
         return true;
     }
 
-    //Método para remover um local
+    //METODO PARA REMOVER UM LOCAL
     @Override
     public boolean remover_local(Integer id_local) throws Local_Exception {
         if(map_local.containsKey(id_local)){
             map_local.remove(id_local);
-            String toLog = "Foi removido o local com id:" + id_local;
-            locais.addText(toLog, data, "Data/Info");
+            String toLocal = "Foi removido o local com id:" + id_local;
+            addText_local(toLocal, data, "C:\\Users\\Alex\\Documents\\JavaProjects\\Projeto_AED2LP2\\src\\Data\\Info");
             return true;
         }
         throw new Local_Exception("O Local que quer remover nao existe");
     }
 
-    //Método para verificar se existe ou não um determinado local
+    //METODO PARA VERIFICAR A EXISTENCIA DE UM LOCAL
     @Override
     public boolean verificar_local(Integer id_local) {
         return map_local.containsKey(id_local);
     }
 
+    //METODO PARA EDITAR UM DETERMINADO LOCAL
+    @Override
+    public boolean editar_local(Integer id_local, String nome_local, int x_local, int y_local) {
+        if (map_local.get(id_local) != null){
+            map_local.get(id_local).setLocal_name(nome_local);
+            map_local.get(id_local).setLocal_x(x_local);
+            map_local.get(id_local).setLocal_y(y_local);
+            return true;
+        }
+        return false;
+    }
 
-    //Método para guardar todos os Locais existentes num ficheiro
+    public Local encontrarLocalPorId(int idLocal){
+        return map_local.get(idLocal);
+    }
+
+    //METODO PARA GUARDAR TODOS OS LOCAIS NUM FICHEIRO
     @Override
     public void guardarLocaisEmArquivo() {
-        try (FileWriter writer = new FileWriter("Data/Locais.txt", false)) {
+        try (FileWriter writer = new FileWriter("C:\\Users\\Alex\\Documents\\JavaProjects\\Projeto_AED2LP2\\src\\Data\\Locais", false)) {
             for (Local local : map_local.values()) {
                 String linha = "ID: " + local.getId_local() + "," + "NOME: " + local.getLocal_name() + ", COORDENADA X: " + local.getLocal_x() + ", COORDENADA Y: " + local.getLocal_y();
                 writer.write(linha + "\n");
@@ -88,10 +103,10 @@ public class Local_BD implements Local_I {
         }
     }
 
-    //Método para listar os Locais do
+    //METODO PARA LISTAR TODOS OS LOCAIS DO FICHEIRO
     @Override
     public void listarLocaisDeArquivo() {
-        try (BufferedReader reader = new BufferedReader(new FileReader("Data/Locais.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\Alex\\Documents\\JavaProjects\\Projeto_AED2LP2\\src\\Data\\Locais"))) {
             String linha;
             while ((linha = reader.readLine()) != null) {
                 String[] campos = linha.split(", ");
@@ -110,14 +125,4 @@ public class Local_BD implements Local_I {
         }
     }
 
-    @Override
-    public boolean editar_local(Integer id_local, String nome_local, int x_local, int y_local) {
-        if (map_local.get(id_local) != null){
-            map_local.get(id_local).setLocal_name(nome_local);
-            map_local.get(id_local).setLocal_x(x_local);
-            map_local.get(id_local).setLocal_y(y_local);
-            return true;
-        }
-        return false;
-    }
 }

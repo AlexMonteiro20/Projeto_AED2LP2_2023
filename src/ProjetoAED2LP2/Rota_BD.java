@@ -14,7 +14,7 @@ import java.util.Date;
     private int num_rotas;
     private final Date data = new Date();
 
-    //GETS E SETS
+    //GETS E SETS ROTA_BD
     public BST_AED2<Integer, Rota> getBst_rotas() {
         return bst_rotas;
     }
@@ -33,7 +33,7 @@ import java.util.Date;
     }
 
 
-
+     //METODO PARA ADICIONAR TEXTO RELATIVO AS ROTAS AO FICHEIRO
     public void addText_rotas(String mensagem, Date data, String file) {
 
         int k = 0;
@@ -49,7 +49,7 @@ import java.util.Date;
         Outfile.println(mensagem + ", na data de: " + data);
     }
 
-    //Método para inserir um user
+    //METODO PARA INSERIR UMA ROTA
     @Override
     public void inserir_rota(Rota rota) {
         rota.setId_rota(num_rotas);
@@ -59,7 +59,7 @@ import java.util.Date;
         addText_rotas(toRotas, data, "Data/Info");
     }
 
-    //Método para remover um user recebido por parametro
+    //METODO PARA REMOVER UMA ROTA
     @Override
     public void remove_rota(Integer idRota) throws Rota_Exception {
         if(bst_rotas.contains(idRota)){
@@ -70,13 +70,13 @@ import java.util.Date;
         throw new Rota_Exception("A Rota nao existe!\n");
     }
 
-    //Método para verificar se o user recebido por paramnetro existe ou nao
+    //METODO PARA VERIFICAR A EXISTENCIA DE UMA ROTA
     @Override
     public boolean verificar_rota(Integer idRota) {
         return bst_rotas.contains(idRota);
     }
 
-    //Método para editar um determinado user
+    //METODO PARA EDITAR UMA DETERMINADA ROTA
     @Override
     public boolean editar_rota(int id_rota, ArrayList<Ligacao> ligacaos) {
         if (bst_rotas.get(id_rota)!=null){
@@ -86,7 +86,8 @@ import java.util.Date;
         return false;
     }
 
-    //Método para guardar todos os users num ficheiro
+
+    //METODO PARA GUARDAR TODAS AS ROTAS NUM FICHEIRO
     @Override
     public void guardar_rota(){
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("Data/Rotas.txt"))) {
@@ -102,7 +103,7 @@ import java.util.Date;
         }
     }
 
-    //Método para listar todos os users do ficheiro
+    //METODO PARA LISTAR TODAS AS ROTAS DO FICHEIRO
     @Override
     public void listar_rotas() {
         try (BufferedReader reader = new BufferedReader(new FileReader("Data/Rotas.txt"))) {

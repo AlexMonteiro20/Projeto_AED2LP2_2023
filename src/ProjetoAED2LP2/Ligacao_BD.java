@@ -16,7 +16,7 @@ public class Ligacao_BD implements Ligacao_I{
     private int num_ligacoes;
     private final Date data = new Date();
 
-    //GETS E SETS
+    //GETS E SETS LIGACAO_BD
     public BST_AED2<Integer, Ligacao> getBst_ligacoes() {
         return bst_ligacoes;
     }
@@ -35,6 +35,7 @@ public class Ligacao_BD implements Ligacao_I{
         return data;
     }
 
+    //METODO PARA ADICIONAR TEXTO RELATIVO AS LIGACOES AO FICHEIRO
     public void addText_ligacoes(String mensagem, Date data, String file) {
 
         int k = 0;
@@ -50,7 +51,7 @@ public class Ligacao_BD implements Ligacao_I{
         Outfile.println(mensagem + ", na data de: " + data);
     }
 
-    //Método para inserir um user
+    //METODO PARA INSERIR UMA LIGACAO
     @Override
     public void inserir_ligacao(Ligacao ligacao) {
         ligacao.setId_ligacao(num_ligacoes);
@@ -60,7 +61,7 @@ public class Ligacao_BD implements Ligacao_I{
         addText_ligacoes(toLigacoes, data, "Data/Info");
     }
 
-    //Método para remover um user recebido por parametro
+    //METODO PARA REMOVER UMA LIGACAO
     @Override
     public void remove_ligacao(Integer idLigacao) throws Ligacao_Exception {
         if(bst_ligacoes.contains(idLigacao)){
@@ -73,13 +74,13 @@ public class Ligacao_BD implements Ligacao_I{
         throw new Ligacao_Exception("A Ligacao nao existe!\n");
     }
 
-    //Método para verificar se o user recebido por paramnetro existe ou nao
+    //METODO PARA VERIFICAR A EXISTENCIA DE UMA LIGACAO
     @Override
     public boolean verificar_ligacao(Integer idLigacao) {
         return bst_ligacoes.contains(idLigacao);
     }
 
-    //Método para editar um determinado user
+    //METODO PARA EDITAR UMA DETERMINADA LIGACAO
     @Override
     public boolean editar_ligacao(int id_ligacao, Estacao estacao_a, Estacao estacao_b, Transporte transporte_utilizado) {
         if (bst_ligacoes.get(id_ligacao)!=null){
@@ -91,7 +92,7 @@ public class Ligacao_BD implements Ligacao_I{
         return false;
     }
 
-    //Método para guardar todos os users num ficheiro
+    //METODO PARA GUARDAR TODAS AS LIGACOES NUM FICHEIRO
     @Override
     public void guardar_ligacao(){
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("Data/Ligacoes.txt"))) {
@@ -107,7 +108,7 @@ public class Ligacao_BD implements Ligacao_I{
         }
     }
 
-    //Método para listar todos os users do ficheiro
+    //METODO PARA LISTAR TODAS AS LIGACOES DO FICHEIRO
     @Override
     public void listar_ligacoes() {
         try (BufferedReader reader = new BufferedReader(new FileReader("Data/Ligacoes.txt"))) {

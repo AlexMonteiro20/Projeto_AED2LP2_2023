@@ -13,7 +13,7 @@ public class Transporte_BD implements Transporte_I {
     private int num_transporte;
     private final Date data = new Date();
 
-    //gets & sets
+    //GETS E SETS TRANSPORTE_BD
     public HashMap<Integer, Transporte> getHm_transportes() {
         return hm_transportes;
     }
@@ -26,11 +26,11 @@ public class Transporte_BD implements Transporte_I {
     public void setNum_transporte(int num_transporte) {
         this.num_transporte = num_transporte;
     }
-
     public Date getData() {
         return data;
     }
 
+    //METODO PARA ADICIONAR TEXTO RELATIVO AOS TRANSPORTES AO FICHEIRO
     public void addText_transporte(String mensagem, Date data, String file) {
 
         int k = 0;
@@ -46,7 +46,7 @@ public class Transporte_BD implements Transporte_I {
         Outfile.println(mensagem + ", na data de: " + data);
     }
 
-    //Método para inserir um user
+    //METODO PARA INSERIR UM TRANSPORTE
     @Override
     public void inserir_transporte(Transporte transporte) {
         transporte.setId_transporte(num_transporte);
@@ -56,7 +56,7 @@ public class Transporte_BD implements Transporte_I {
         addText_transporte(toTransportes, data, "Data/Info");
     }
 
-    //Método para remover um user recebido por parametro
+    //METODO PARA REMOVER UM TRANSPORTE
     @Override
     public void remove_transporte(Integer idTransporte) throws Transporte_Exception {
         if(hm_transportes.containsKey(idTransporte)){
@@ -68,13 +68,13 @@ public class Transporte_BD implements Transporte_I {
         throw new Transporte_Exception("O transporte nao existe!\n");
     }
 
-    //Método para verificar se o user recebido por paramnetro existe ou nao
+    //METODO PARA VERIFICAR A EXISTENCIA DE UM TRANSPORTE
     @Override
     public boolean verificar_transporte(Integer idTransporte) {
         return hm_transportes.containsKey(idTransporte);
     }
 
-    //Método para editar um determinado user
+    //METODO PARA EDITAR UM DETERMINADO TRANSPORTE
     @Override
     public boolean editar_transporte(int id_transporte, String name_transporte) {
         if (hm_transportes.get(id_transporte)!=null){
@@ -84,12 +84,13 @@ public class Transporte_BD implements Transporte_I {
         return false;
     }
 
+    //METODO PARA ENCONTRAR UM TRANSPORTE PELO ID
     @Override
     public Transporte encontrarTransportePorId(int idTransporte) {
         return hm_transportes.get(idTransporte);
     }
 
-    //Método para guardar todos os users num ficheiro
+    //METODO PARA GUARDAR TODOS OS TRANSPORTES NUM FICHEIRO
     @Override
     public void guardar_transportes(){
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("Data/Transportes.txt"))) {
@@ -105,7 +106,7 @@ public class Transporte_BD implements Transporte_I {
         }
     }
 
-    //Método para listar todos os users do ficheiro
+    //METODO PARA LISTAR TODOS OS TRANSPORTES DE UM FICHEIRO
     @Override
     public void listar_transportes() {
         try (BufferedReader reader = new BufferedReader(new FileReader("Data/Transportes.txt"))) {

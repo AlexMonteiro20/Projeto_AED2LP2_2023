@@ -1,6 +1,5 @@
 package ProjetoAED2LP2;
 
-import Implementacoes.RedBlackTree;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Out;
 
@@ -14,7 +13,7 @@ public class Estacao_BD implements Estacao_I {
     private int num_estacao;
     private final Date data = new Date();
 
-    //gets & sets
+    //GETS E SETS ESTACAO_BD
     public HashMap<Integer, Estacao> getEstacoes() {
         return hm_estacoes;
     }
@@ -23,6 +22,7 @@ public class Estacao_BD implements Estacao_I {
         this.hm_estacoes = hm_estacoes;
     }
 
+    //METODO PARA ADICIONAR TEXTO RELATIVO AS ESTACOES AO FICHEIRO
     public void addText_estacao(String mensagem, Date data, String file) {
 
         int k = 0;
@@ -38,7 +38,7 @@ public class Estacao_BD implements Estacao_I {
         Outfile.println(mensagem + ", na data de: " + data);
     }
 
-    //Método para inserir um user
+    //METODO PARA INSERIR UMA ESTACAO
     @Override
     public void inserir_estacao(Estacao estacao) {
         estacao.setId_local(num_estacao);
@@ -48,7 +48,7 @@ public class Estacao_BD implements Estacao_I {
         addText_estacao(toEstacoes, data, "Data/Info");
     }
 
-    //Método para remover um user recebido por parametro
+    //METODO PARA REMOVER UMA ESTACAO
     @Override
     public void remove_estacao(Integer idEstacao) throws Estacao_Exception {
         if(hm_estacoes.containsKey(idEstacao)){
@@ -60,13 +60,13 @@ public class Estacao_BD implements Estacao_I {
         throw new Estacao_Exception("A Estacao nao existe!\n");
     }
 
-    //Método para verificar se o user recebido por paramnetro existe ou nao
+    //METODO PARA VERIFICAR A EXISTENCIA DE UMA ESTACAO
     @Override
     public boolean verificar_estacao(Integer idUser) {
         return hm_estacoes.containsKey(idUser);
     }
 
-    //Método para editar um determinado user
+    //METODO PARA EDITAR UMA DETERMINADA ESTACAO
    @Override
     public boolean editar_estacao(int id_local, String local_name, int local_x, int local_y) {
         if (hm_estacoes.get(id_local)!=null){
@@ -78,11 +78,12 @@ public class Estacao_BD implements Estacao_I {
         return false;
     }
 
+    //METODO PARA ENCONTRAR UMA ESTACAO PELO ID
     public Estacao encontrarEstacaoPorId(int id) {
         return hm_estacoes.get(id);
     }
 
-    //Método para guardar todos os users num ficheiro
+    //METODO PARA GUARDAR TODAS AS ESTACOES NUM FICHEIRO
     @Override
     public void guardar_estacao(){
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("Data/Estacoes.txt"))) {
@@ -98,7 +99,7 @@ public class Estacao_BD implements Estacao_I {
         }
     }
 
-    //Método para listar todos os users do ficheiro
+    //METODO PARA LISTAR TODAS AS ESTACOES DO FICHEIRO
     @Override
     public void listar_estacoes() {
         try (BufferedReader reader = new BufferedReader(new FileReader("Data/Estacoes.txt"))) {
